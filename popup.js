@@ -7,13 +7,24 @@ document.getElementById("change-colors").addEventListener("click", () => {
     });
   });
   
-document.getElementById("enlarge-fonts").addEventListener("click", () => {
-chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.scripting.executeScript({
-    target: { tabId: tabs[0].id },
-    func: enlargeFonts,
-    });
-});
+// document.getElementById("enlarge-fonts").addEventListener("click", () => {
+// chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+//     chrome.scripting.executeScript({
+//     target: { tabId: tabs[0].id },
+//     func: enlargeFonts,
+//     });
+// });
+// });
+
+document.getElementById("font-size-slider").addEventListener("input", (event) => {
+  let fontSize = event.target.value + "px";
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          func: enlargeFonts,
+          args: [fontSize]
+      });
+  });
 });
 
 document.getElementById("read-aloud").addEventListener("click", () => {
@@ -33,10 +44,16 @@ document.querySelectorAll("*").forEach((el) => {
 });
 }
   
-function enlargeFonts() {
-document.querySelectorAll("*").forEach((el) => {
-    el.style.fontSize = "28px";
-});
+// function enlargeFonts() {
+// document.querySelectorAll("*").forEach((el) => {
+//     el.style.fontSize = "28px";
+// });
+// }
+
+function enlargeFonts(fontSize) {
+  document.querySelectorAll("*").forEach((el) => {
+      el.style.fontSize = fontSize;
+  });
 }
 
 function speakSelectedText() {

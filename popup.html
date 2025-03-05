@@ -62,12 +62,54 @@
     transform: scale(0.98);
   }
 
+  input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #808080;
+  border-radius: 5px;
+  outline: none;
+  transition: all 0.3s ease;
+  margin: 5px 0 15px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border: 2px solid #357ABD;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #357ABD;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.1);
+}
+
+label {
+  display: block;
+  font-size: 16px; /* Matches button text */
+  font-weight: bold;
+  color: #d4d4d4;
+  margin: 10px 0 5px;
+  text-align: center;
+}
+
   </style>
 </head>
 <body>
   <h2>Style the Page</h2>
   <button id="change-colors">Change Colors</button>
-  <button id="enlarge-fonts">Enlarge Fonts</button>
+  <!-- <button id="enlarge-fonts">Enlarge Fonts</button> -->
+  <label for="font-size-slider">Font Size: </label>
+  <input type="range" id="font-size-slider" min="17" max="32" value="17">
   <button id="read-aloud">Read Aloud Selected Text</button>
   <script src="popup.js"></script>
 </body>
