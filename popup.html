@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Style Options</title>
+  <style>
+    /* body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 10px;
+      background-color: rgb(169, 166, 168);
+      text-align: center;
+    }
+    button {
+      margin: 10px 0;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #808080;
+      color: #d3ece1;
+    }
+    button:hover {
+      background-color: #444;
+    } */
+
+    body {
+    width: 250px;
+    padding: 20px;
+    background: #1e1e2e;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+
+  h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #d4d4d4;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 16px;
+    color: #ffffff;
+    background: #808080;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  button:hover {
+    background: #357ABD;
+  }
+
+  button:active {
+    transform: scale(0.98);
+  }
+
+  </style>
+</head>
+<body>
+  <h2>Style the Page</h2>
+  <button id="change-colors">Change Colors</button>
+  <button id="enlarge-fonts">Enlarge Fonts</button>
+  <button id="read-aloud">Read Aloud Selected Text</button>
+  <script src="popup.js"></script>
+</body>
+</html>
