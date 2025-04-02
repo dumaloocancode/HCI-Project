@@ -32,11 +32,11 @@ document.getElementById("toggle-zen-preview").addEventListener("click", () => {
   let newState = !isEnabled;
   localStorage.setItem("zenPreviewEnabled", newState);
   
-  // Update button appearance
+  // change the button appearance maybe? FIX: DONE
   let button = document.getElementById("toggle-zen-preview");
   button.style.backgroundColor = newState ? "#4CAF50" : "#f44336";
   
-  // Inject or remove the Zen preview functionality
+  // remove and inject the preview window
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.scripting.executeScript({
       target: { tabId: tabs[0].id },
@@ -99,7 +99,8 @@ document.querySelectorAll("*").forEach((el) => {
     el.style.color = "rgb(211,236,225)";
 });
 }
-  
+
+// DON'T UNCOMMENT, FINAL RUN : PREVIOUS USE, not needed
 // function enlargeFonts() {
 // document.querySelectorAll("*").forEach((el) => {
 //     el.style.fontSize = "28px";
@@ -117,8 +118,8 @@ function speakSelectedText() {
   
   if (selectedText) {
     const utterance = new SpeechSynthesisUtterance(selectedText);
-    utterance.lang = 'en-US'; // Set default language
-    utterance.rate = 1; // Normal speed
+    utterance.lang = 'en-US'; 
+    utterance.rate = 1; 
     window.speechSynthesis.speak(utterance);
   } else {
     alert('Please select some text first!');
