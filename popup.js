@@ -27,6 +27,25 @@ document.getElementById("font-size-slider").addEventListener("input", (event) =>
   });
 });
 
+document.getElementById("toggle-zen-preview").addEventListener("click", () => {
+  let isEnabled = localStorage.getItem("zenPreviewEnabled") === "true";
+  let newState = !isEnabled;
+  localStorage.setItem("zenPreviewEnabled", newState);
+  
+  // Update button appearance
+  let button = document.getElementById("toggle-zen-preview");
+  button.style.backgroundColor = newState ? "#4CAF50" : "#f44336";
+  
+  // Inject or remove the Zen preview functionality
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.scripting.executeScript({
+      target: { tabId: tabs[0].id },
+      func: injectZenPreviewFeature,
+      args: [newState]
+    });
+  });
+});
+
 document.getElementById("read-aloud").addEventListener("click", () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.scripting.executeScript({
@@ -104,5 +123,111 @@ function speakSelectedText() {
   } else {
     alert('Please select some text first!');
   }
-}
+} 
+
+function injectZenPreviewFeature(enable) {
+  const existingContainer = document.getElementById("zen-glance-container");
+  if (existingContainer) {
+    existingContainer.remove();
+  }
+
+  // if auser disables, then just return kar do 
+  if (!enable) return;
   
+  // glance container created here
+  let glanceContainer = document.createElement("div");
+  glanceContainer.id = "zen-glance-container";
+  glanceContainer.style = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: white;
+    border: 2px solid #357ABD;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    display: none;
+    border-radius: 8px;
+    overflow: hidden;
+  `;
+  document.body.appendChild(glanceContainer);
+
+  // ctrl + shift + click to handle the event
+  document.addEventListener("click", (event) => {
+    if (event.ctrlKey && event.shiftKey && event.target.closest("a")) {
+      event.preventDefault();
+      const link = event.target.closest("a");
+      showGlance(link.href);
+    }
+  }); 
+
+  function showGlance(url) {
+    glanceContainer.innerHTML = `
+      <div style="display: flex; justify-content: space-between; background: #357ABD; padding: 10px; color: white;">
+        <span>Preview: ${url}</span>
+        <div>
+          <button id="expand-glance" style="margin-right: 10px; background: transparent; border: 1px solid white; color: white; cursor: pointer; padding: 3px 8px; border-radius: 3px;">Open Tab</button>
+          <button id="close-glance" style="background: transparent; border: 1px solid white; color: white; cursor: pointer; padding: 3px 8px; border-radius: 3px;">✕</button>
+        </div>
+      </div>
+      <iframe id="glance-iframe" src="${url}" style="width:100%; height:calc(100% - 40px); border: none;"></iframe>
+    `;
+    
+    glanceContainer.style.display = "block";
+    
+    document.getElementById("close-glance").addEventListener("click", () => {
+      glanceContainer.style.display = "none";
+    });
+  
+    document.getElementById("expand-glance").addEventListener("click", () => {
+      window.open(url, '_blank');
+      glanceContainer.style.display = "none";
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && glanceContainer.style.display === "block") {
+      glanceContainer.style.display = "none";
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (!document.getElementById("toggle-zen-preview")) {
+    const zenButton = document.createElement("button");
+    zenButton.id = "toggle-zen-preview";
+    zenButton.textContent = "Enable Link Preview (ctrl+shift)";
+    zenButton.style.backgroundColor = localStorage.getItem("zenPreviewEnabled") === "true" ? "#4CAF50" : "#f44336";
+    zenButton.style.color = "white";
+    
+    document.getElementById("submenu").appendChild(zenButton);
+    
+    zenButton.addEventListener("click", () => {
+      let isEnabled = localStorage.getItem("zenPreviewEnabled") === "true";
+      let newState = !isEnabled;
+      localStorage.setItem("zenPreviewEnabled", newState);
+      
+      zenButton.style.backgroundColor = newState ? "#4CAF50" : "#f44336";
+      
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          func: injectZenPreviewFeature,
+          args: [newState]
+        });
+      });
+    });
+  }
+  
+  if (localStorage.getItem("zenPreviewEnabled") === "true") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.scripting.executeScript({
+        target: { tabId: tabs[0].id },
+        func: injectZenPreviewFeature,
+        args: [true]
+      });
+    });
+  }
+});

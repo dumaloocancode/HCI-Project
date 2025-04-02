@@ -1,38 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Style Options</title>
-  <style>
-    /* body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 10px;
-      background-color: rgb(169, 166, 168);
-      text-align: center;
-    }
-    button {
-      margin: 10px 0;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background-color: #808080;
-      color: #d3ece1;
-    }
-    button:hover {
-      background-color: #444;
-    } */
-
-    body {
-    width: 250px;
-    padding: 20px;
-    background: #1e1e2e;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-    text-align: center;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Style Options</title>
+<style>
+   
+  body {
+  width: 250px;
+  padding: 20px;
+  background: #1e1e2e;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  text-align: center;
   }
 
   h2 {
@@ -71,39 +51,40 @@
   outline: none;
   transition: all 0.3s ease;
   margin: 5px 0 15px;
-}
+  }
 
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  background: #ffffff;
-  border: 2px solid #357ABD;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #ffffff;
+    border: 2px solid #357ABD;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
 
-input[type="range"]::-webkit-slider-thumb:hover {
-  background: #357ABD;
-}
+  input[type="range"]::-webkit-slider-thumb:hover {
+    background: #357ABD;
+  }
 
-input[type="range"]::-webkit-slider-thumb:active {
-  transform: scale(1.1);
-}
+  input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(1.1);
+  }
 
-label {
-  display: block;
-  font-size: 16px; /* Matches button text */
-  font-weight: bold;
-  color: #d4d4d4;
-  margin: 10px 0 5px;
-  text-align: center;
-}
+  label {
+    display: block;
+    font-size: 16px; /* Matches button text */
+    font-weight: bold;
+    color: #d4d4d4;
+    margin: 10px 0 5px;
+    text-align: center;
+  }
 
-  </style>
+</style>
 </head>
+
 <body>
   <h2>Style the Page</h2>
   <button id="change-colors">Change Colors</button>
@@ -114,6 +95,8 @@ label {
   <div id="submenu" style="display: none; margin-top: 10px;">
     <h3 style="font-size: 16px; color: #d4d4d4;">Accessibility</h3>
     <button id="toggle-dyslexia-font">Toggle Dyslexia-Friendly Font</button>
+    <!-- <button id="toggle-preview">Toggle Dyslexia Preview</button> -->
+    <button id="toggle-zen-preview">Enable Window Preview (ctrl + shift)</button>
   </div>
   <button id="toggle-menu">Accessibility Options</button>
   <script src="popup.js"></script>
