@@ -35,6 +35,34 @@ document.getElementById("read-aloud").addEventListener("click", () => {
     });
   });
 });
+
+document.getElementById("toggle-menu").addEventListener("click", () => {
+  let submenu = document.getElementById("submenu");
+  submenu.style.display = submenu.style.display === "none" ? "block" : "none";
+});
+
+document.getElementById("toggle-dyslexia-font").addEventListener("click", () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.scripting.executeScript({
+      target: { tabId: tabs[0].id },
+      func: toggleDyslexiaFont,
+    });
+  });
+});
+
+function toggleDyslexiaFont() {
+  let styleId = "dyslexia-font-style";
+  let existingStyle = document.getElementById(styleId);
+  
+  if (existingStyle) {
+    existingStyle.remove();
+  } else {
+    let style = document.createElement("style");
+    style.id = styleId;
+    style.innerHTML = "* { font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important; }";
+    document.head.appendChild(style);
+  }
+}
   
 function changeColors() {
 document.body.style.backgroundColor = "rgb(35,43,43)";
