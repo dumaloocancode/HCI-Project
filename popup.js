@@ -52,14 +52,23 @@ document.getElementById("toggle-dyslexia-font").addEventListener("click", () => 
 
 function toggleDyslexiaFont() {
   let styleId = "dyslexia-font-style";
+  let linkId = "dyslexia-font-link";
   let existingStyle = document.getElementById(styleId);
-  
+  let existingLink = document.getElementById(linkId);
+
   if (existingStyle) {
     existingStyle.remove();
+    if (existingLink) existingLink.remove();
   } else {
+    let link = document.createElement("link");
+    link.id = linkId;
+    link.rel = "stylesheet";
+    link.href = "https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic-regular.min.css";
+    document.head.appendChild(link);
+    
     let style = document.createElement("style");
     style.id = styleId;
-    style.innerHTML = "* { font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important; }";
+    style.innerHTML = "* { font-family: 'OpenDyslexicRegular', 'Comic Sans MS', sans-serif !important; }";
     document.head.appendChild(style);
   }
 }
