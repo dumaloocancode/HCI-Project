@@ -3,7 +3,7 @@
   "name": "de-slexia",
   "version": "1.0",
   "description": "Customize the font size, text color, and background of any webpage.",
-  "permissions": ["scripting", "activeTab", "storage"],
+  "permissions": ["scripting", "activeTab"],
   "host_permissions": ["<all_urls>", "*://*.google.com/*"],
   "action": {
     "default_title": "Style the page",
